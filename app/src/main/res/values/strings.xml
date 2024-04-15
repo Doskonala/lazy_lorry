@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="title_activity_messages">MessagesActivity</string>
+    <string name="title_activity_add_lorry">AddLorryActivity</string>
 </resources>
