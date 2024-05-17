@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Lazy Lorry</string>
     <string name="title_activity_messages">MessagesActivity</string>
     <string name="title_activity_add_lorry">AddLorryActivity</string>
+    <string name="select_type_of_freight">Тип вантажу</string>
+    <string name="select_bodywork_for_lorry">Тип кузова</string>
+    <string name="select_category_for_driver">Категорія</string>
+    <string name="select_group_for_freight">Група вантажу</string>
+    <string name="select_way_of_transportation_for_freight">Спосіб перевезення</string>
 </resources>

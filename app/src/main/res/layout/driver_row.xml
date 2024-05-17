@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/driver_full_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="ПІБ: "
+                android:textColor="#000"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.142" />
+
+            <TextView
+                android:id="@+id/driver_email_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/driver_full_name_text"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="Електронна пошта: " />
+
+            <TextView
+                android:id="@+id/driver_phone_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/driver_email_text"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="Телефон: " />
+
+            <TextView
+                android:id="@+id/driver_additional_info_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/driver_phone_text"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="Додаткова контактна інформація: " />
+
+            <TextView
+                android:id="@+id/driver_license_number_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/driver_additional_info_text"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="Номер посвідчення: " />
+
+            <TextView
+                android:id="@+id/driver_license_series_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/driver_license_number_text"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="Серія посвідчення: " />
+
+            <TextView
+                android:id="@+id/driver_license_category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/driver_license_series_text"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="Категорія посвідчення: " />
+
+            <TextView
+                android:id="@+id/driver_salary_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/driver_license_category_text"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="Зарплата: " />
+
+            <TextView
+                android:id="@+id/driver_hire_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/driver_salary_text"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="Дата прийому на роботу: " />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

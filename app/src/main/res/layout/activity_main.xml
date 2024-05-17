@@ -13,7 +13,7 @@
         android:padding="1dp"
         android:layout_height="match_parent"
         android:fillViewport="true">
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -23,91 +23,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Додати поїздку"
+                android:text="Розклад руху"
                 android:textStyle="bold"
                 android:layout_marginTop="50dp"
                 android:textSize="30sp" />
-            <EditText
-                android:id="@+id/freight"
-                android:hint="Вантаж"
-                android:layout_marginTop="30dp"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/lorry"
-                android:hint="Вантажівка"
-                android:layout_marginTop="10dp"
-                android:inputType="text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/driver"
-                android:hint="Водій"
-                android:layout_marginTop="10dp"
-                android:inputType="text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/origin"
-                android:hint="Місце відправки"
-                android:layout_marginTop="10dp"
-                android:inputType="text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/destination"
-                android:hint="Місце призначення"
-                android:layout_marginTop="10dp"
-                android:inputType="text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/distance"
-                android:hint="Відстань (км)"
-                android:layout_marginTop="10dp"
-                android:inputType="text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/date"
-                android:hint="Дата"
-                android:layout_marginTop="10dp"
-                android:inputType="date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/time"
-                android:hint="Час"
-                android:layout_marginTop="10dp"
-                android:inputType="time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <Button
-                android:id="@+id/btn_add"
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="10dp"
-                android:text="Готово!"
-                android:textSize="21sp" />
-            <TextView
-                android:id="@+id/schedule_title"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:text="Розклад\n"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/schedule"
-                android:layout_marginTop="5dp"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:id="@+id/recyclerTripsView"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:paddingBottom="?attr/actionBarSize"/>
         </LinearLayout>
     </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_trip_button"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/add" />
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="match_parent"

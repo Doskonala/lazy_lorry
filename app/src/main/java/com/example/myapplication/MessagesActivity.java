@@ -9,14 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.time.LocalTime;
-import java.util.Date;
 
 public class MessagesActivity extends AppCompatActivity {
 
@@ -25,14 +20,6 @@ public class MessagesActivity extends AppCompatActivity {
     LinearLayout timetable, messages, orders, lorries, drivers, clients, partners, company;
     LinearLayout logout;
     Button buttonAdd;
-    EditText editTextFreight,editTextLorry,editTextDriver,editTextOrigin,editTextDestination,editTextDistance,editTextDate,editTextTime;
-    TextView textViewTitle;
-    TextView textViewSchedule;
-    int freight;
-    String lorry,driver,origin,destination;
-    double distance;
-    Date date;
-    LocalTime time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,16 +96,6 @@ public class MessagesActivity extends AppCompatActivity {
             }
         });
         buttonAdd=findViewById(R.id.btn_add);
-        editTextFreight=findViewById(R.id.freight);
-        editTextLorry=findViewById(R.id.lorry);
-        editTextDriver=findViewById(R.id.driver);
-        editTextOrigin=findViewById(R.id.origin);
-        editTextDestination=findViewById(R.id.destination);
-        editTextDistance=findViewById(R.id.distance);
-        editTextDate=findViewById(R.id.date);
-        editTextTime=findViewById(R.id.time);
-        textViewTitle=findViewById(R.id.schedule_title);
-        textViewSchedule=findViewById(R.id.schedule);
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){

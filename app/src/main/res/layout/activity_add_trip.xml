@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddLorryActivity"
+    tools:context=".AddTripActivity"
     android:padding="30sp">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -14,64 +14,68 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Додати вантажівку"
+            android:text="Додати перевезення"
             android:textSize="30sp"
             android:textStyle="bold"
             android:layout_marginTop="50dp"/>
         <EditText
-            android:id="@+id/number"
-            android:hint="Номер автомобіля"
+            android:id="@+id/freight_id"
+            android:hint="ID замовлення"
             android:layout_marginTop="30dp"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/lorry_number"
+            android:hint="Номер вантажівки"
+            android:layout_marginTop="10dp"
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
-            android:id="@+id/load_capacity"
-            android:hint="Вантажність (т)"
+            android:id="@+id/driver_number"
+            android:hint="Номер посвідчення водія"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/origin"
+            android:hint="Місце відправки"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/destination"
+            android:hint="Місце признечення"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/distance"
+            android:hint="Відстань"
             android:layout_marginTop="10dp"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
-            android:id="@+id/manufacturer"
-            android:hint="Виробник"
+            android:id="@+id/date"
+            android:hint="Дата"
             android:layout_marginTop="10dp"
-            android:inputType="text"
+            android:inputType="date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3.5dp"
-            android:hint="@string/select_type_of_freight"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-            <AutoCompleteTextView
-                android:id="@+id/auto_complete_txt_type_of_freight_for_lorry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3.5dp"
-            android:hint="@string/select_bodywork_for_lorry"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-            <AutoCompleteTextView
-                android:id="@+id/auto_complete_txt_bodywork_for_lorry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"/>
-        </com.google.android.material.textfield.TextInputLayout>
         <EditText
-            android:id="@+id/production_year"
-            android:hint="Рік виробництва"
+            android:id="@+id/time"
+            android:hint="Час"
             android:layout_marginTop="10dp"
-            android:inputType="number"
+            android:inputType="time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/btn_add_lorry"
+            android:id="@+id/btn_add_trip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

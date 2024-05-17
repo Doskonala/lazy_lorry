@@ -3,40 +3,32 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.time.LocalTime;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout timetable, messages, orders, lorries, drivers, clients, partners, company;
     LinearLayout logout;
-    Button buttonAdd;
-    EditText editTextFreight,editTextLorry,editTextDriver,editTextOrigin,editTextDestination,editTextDistance,editTextDate,editTextTime;
-    TextView textViewTitle;
-    TextView textViewSchedule;
-    int freight;
-    String lorry,driver,origin,destination;
-    double distance;
-    Date date;
-    LocalTime time;
+    RecyclerView recyclerTripsView;
+    FloatingActionButton add_trip_button;
+    MyDatabaseHelper myDB;
+    ArrayList trip_id, order_id, lorry_number, driver_number, driver_name, origin, destination, distance, date, time;
+    TripsCustomAdapter tripsCustomAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +44,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         partners=findViewById(R.id.partners);
         company=findViewById(R.id.company);
         logout=findViewById(R.id.logout);
+        recyclerTripsView = findViewById(R.id.recyclerTripsView);
+        add_trip_button = findViewById(R.id.add_trip_button);
+        add_trip_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddTripActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        myDB = new MyDatabaseHelper(MainActivity.this);
+        trip_id = new ArrayList<>();
+        order_id = new ArrayList<>();
+        lorry_number = new ArrayList<>();
+        driver_number = new ArrayList<>();
+        driver_name = new ArrayList<>();
+        origin = new ArrayList<>();
+        destination = new ArrayList<>();
+        distance = new ArrayList<>();
+        date = new ArrayList<>();
+        time = new ArrayList<>();
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,18 +126,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this,"Ви вийшли з системи",Toast.LENGTH_SHORT).show();
             }
         });
-        buttonAdd=findViewById(R.id.btn_add);
-        editTextFreight=findViewById(R.id.freight);
-        editTextLorry=findViewById(R.id.lorry);
-        editTextDriver=findViewById(R.id.driver);
-        editTextOrigin=findViewById(R.id.origin);
-        editTextDestination=findViewById(R.id.destination);
-        editTextDistance=findViewById(R.id.distance);
-        editTextDate=findViewById(R.id.date);
-        editTextTime=findViewById(R.id.time);
-        textViewTitle=findViewById(R.id.schedule_title);
-        textViewSchedule=findViewById(R.id.schedule);
-        buttonAdd.setOnClickListener(this);
+
+        storeTripsInArrays();
+        tripsCustomAdapter = new TripsCustomAdapter(MainActivity.this, trip_id, order_id, lorry_number, driver_number, driver_name, origin, destination, distance, date, time);
+        recyclerTripsView.setAdapter(tripsCustomAdapter);
+        recyclerTripsView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+    }
+
+    void storeTripsInArrays () {
+        Cursor cursor = myDB.readAllTrips();
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "Дані про перевезення відсутні", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            while (cursor.moveToNext()){
+                trip_id.add(cursor.getString(0));
+                order_id.add(cursor.getString(1));
+                lorry_number.add(cursor.getString(2));
+                driver_number.add(cursor.getString(3));
+                driver_name.add(cursor.getString(4));
+                origin.add(cursor.getString(5));
+                destination.add(cursor.getString(6));
+                distance.add(cursor.getString(7));
+                date.add(cursor.getString(8));
+                time.add(cursor.getString(9));
+            }
+        }
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){
@@ -145,77 +173,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
-    }
-
-    @Override
-    public void onClick(View view) {
-        int flag=1;
-        if(editTextFreight.getText().toString().equals("")) {
-            Toast.makeText(this, "Введіть номер замовлення", Toast.LENGTH_SHORT).show();
-            flag=0;
-        }
-        else{
-            freight=Integer.parseInt(editTextFreight.getText().toString());
-            }
-        if(editTextLorry.getText().toString().equals("")){
-            Toast.makeText(this,"Введіть номер вантажівки",Toast.LENGTH_SHORT).show();
-            flag=0;
-        }
-        else{
-            lorry=editTextLorry.getText().toString();
-        }
-        if(editTextDriver.getText().toString().equals("")){
-            Toast.makeText(this,"Введіть ім'я водія",Toast.LENGTH_SHORT).show();
-            flag=0;
-        }
-        else {
-            driver=editTextDriver.getText().toString();
-        }
-        if(editTextOrigin.getText().toString().equals("")){
-            Toast.makeText(this,"Введіть адресу місця відправки",Toast.LENGTH_SHORT).show();
-            flag=0;
-        }
-        else{
-            origin=editTextOrigin.getText().toString();
-        }
-        if(editTextDestination.getText().toString().equals("")){
-            Toast.makeText(this,"Введіть адресу місця доставки",Toast.LENGTH_SHORT).show();
-            flag=0;
-        }
-        else{
-            destination=editTextDestination.getText().toString();
-        }
-        if(editTextDistance.getText().toString().equals("")){
-            Toast.makeText(this,"Введіть відстань (км)",Toast.LENGTH_SHORT).show();
-            flag=0;
-        }
-        else{
-            distance=Double.parseDouble(editTextDistance.getText().toString());
-        }
-        if(editTextDate.getText().toString().equals("")){
-            Toast.makeText(this,"Введіть дату",Toast.LENGTH_SHORT).show();
-            flag=0;
-        }
-        else{
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.mm.yyyy");
-            try {
-                date = formatter.parse(editTextDate.getText().toString());
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        if(editTextTime.getText().toString().equals("")){
-            Toast.makeText(this,"Введіть час",Toast.LENGTH_SHORT).show();
-            flag=0;
-        }
-        else{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                time= LocalTime.parse(editTextTime.getText().toString()) ;
-            }
-        }
-        if (flag==1){
-            DateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy");
-            textViewSchedule.append("Номер вантажу: "+freight+"\nНомер вантажівки: "+lorry+"\nВодій: "+driver+"\nМісце відправки: "+origin+"\nМісце призначення: "+destination+"\nВідстань (км): "+distance+"\nДата: "+dateFormat.format(date)+"\nЧас: "+time+"\n\n");
-        }
     }
 }

@@ -3,20 +3,21 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.time.LocalTime;
-import java.util.Date;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class OrdersActivity extends AppCompatActivity {
 
@@ -24,15 +25,11 @@ public class OrdersActivity extends AppCompatActivity {
     ImageView menu;
     LinearLayout timetable, messages, orders, lorries, drivers, clients, partners, company;
     LinearLayout logout;
-    Button buttonAdd;
-    EditText editTextFreight,editTextLorry,editTextDriver,editTextOrigin,editTextDestination,editTextDistance,editTextDate,editTextTime;
-    TextView textViewTitle;
-    TextView textViewSchedule;
-    int freight;
-    String lorry,driver,origin,destination;
-    double distance;
-    Date date;
-    LocalTime time;
+    RecyclerView recyclerOrdersView;
+    FloatingActionButton add_order_button;
+    MyDatabaseHelper myDB;
+    ArrayList order_id, group, type, transportation, client_id, client_name, declared_value, partner_id, partner_name, partner_company;
+    OrdersCustomAdapter ordersCustomAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +45,28 @@ public class OrdersActivity extends AppCompatActivity {
         partners=findViewById(R.id.partners);
         company=findViewById(R.id.company);
         logout=findViewById(R.id.logout);
+        recyclerOrdersView = findViewById(R.id.recyclerOrdersView);
+        add_order_button = findViewById(R.id.add_order_button);
+        add_order_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrdersActivity.this, AddOrderActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        myDB = new MyDatabaseHelper(OrdersActivity.this);
+        order_id = new ArrayList<>();
+        group = new ArrayList<>();
+        type = new ArrayList<>();
+        transportation = new ArrayList<>();
+        client_id = new ArrayList<>();
+        client_name = new ArrayList<>();
+        declared_value = new ArrayList<>();
+        partner_id = new ArrayList<>();
+        partner_name = new ArrayList<>();
+        partner_company = new ArrayList<>();
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,17 +127,32 @@ public class OrdersActivity extends AppCompatActivity {
                 Toast.makeText(OrdersActivity.this,"Ви вийшли з системи",Toast.LENGTH_SHORT).show();
             }
         });
-        buttonAdd=findViewById(R.id.btn_add);
-        editTextFreight=findViewById(R.id.freight);
-        editTextLorry=findViewById(R.id.lorry);
-        editTextDriver=findViewById(R.id.driver);
-        editTextOrigin=findViewById(R.id.origin);
-        editTextDestination=findViewById(R.id.destination);
-        editTextDistance=findViewById(R.id.distance);
-        editTextDate=findViewById(R.id.date);
-        editTextTime=findViewById(R.id.time);
-        textViewTitle=findViewById(R.id.schedule_title);
-        textViewSchedule=findViewById(R.id.schedule);
+
+        storeOrdersInArrays();
+        ordersCustomAdapter = new OrdersCustomAdapter(OrdersActivity.this, order_id, group, type, transportation, client_id, client_name, declared_value, partner_id, partner_name, partner_company);
+        recyclerOrdersView.setAdapter(ordersCustomAdapter);
+        recyclerOrdersView.setLayoutManager(new LinearLayoutManager(OrdersActivity.this));
+    }
+
+    void storeOrdersInArrays () {
+        Cursor cursor = myDB.readAllOrders();
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "Дані про замовлення відсутні", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            while (cursor.moveToNext()){
+                order_id.add(cursor.getString(0));
+                group.add(cursor.getString(1));
+                type.add(cursor.getString(2));
+                transportation.add(cursor.getString(3));
+                client_id.add(cursor.getString(4));
+                client_name.add(cursor.getString(5));
+                declared_value.add(cursor.getString(6));
+                partner_id.add(cursor.getString(7));
+                partner_name.add(cursor.getString(8));
+                partner_company.add(cursor.getString(9));
+            }
+        }
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){

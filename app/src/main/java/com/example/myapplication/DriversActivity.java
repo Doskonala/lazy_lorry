@@ -3,20 +3,21 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.time.LocalTime;
-import java.util.Date;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class DriversActivity extends AppCompatActivity {
 
@@ -24,15 +25,11 @@ public class DriversActivity extends AppCompatActivity {
     ImageView menu;
     LinearLayout timetable, messages, orders, lorries, drivers, clients, partners, company;
     LinearLayout logout;
-    Button buttonAdd;
-    EditText editTextFreight,editTextLorry,editTextDriver,editTextOrigin,editTextDestination,editTextDistance,editTextDate,editTextTime;
-    TextView textViewTitle;
-    TextView textViewSchedule;
-    int freight;
-    String lorry,driver,origin,destination;
-    double distance;
-    Date date;
-    LocalTime time;
+    RecyclerView recyclerDriversView;
+    FloatingActionButton add_driver_button;
+    MyDatabaseHelper myDB;
+    ArrayList<String> fullName, email, phone, additionalContactInfo, licenseNumber, licenseSeries, licenseCategory, salary, hireDate;
+    DriversCustomAdapter driversCustomAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +45,27 @@ public class DriversActivity extends AppCompatActivity {
         partners=findViewById(R.id.partners);
         company=findViewById(R.id.company);
         logout=findViewById(R.id.logout);
+        recyclerDriversView = findViewById(R.id.recyclerDriversView);
+        add_driver_button = findViewById(R.id.add_driver_button);
+        add_driver_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DriversActivity.this, AddDriverActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        myDB = new MyDatabaseHelper(DriversActivity.this);
+        fullName = new ArrayList<>();
+        email = new ArrayList<>();
+        phone = new ArrayList<>();
+        additionalContactInfo = new ArrayList<>();
+        licenseNumber = new ArrayList<>();
+        licenseSeries = new ArrayList<>();
+        licenseCategory = new ArrayList<>();
+        salary = new ArrayList<>();
+        hireDate = new ArrayList<>();
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,17 +126,31 @@ public class DriversActivity extends AppCompatActivity {
                 Toast.makeText(DriversActivity.this,"Ви вийшли з системи",Toast.LENGTH_SHORT).show();
             }
         });
-        buttonAdd=findViewById(R.id.btn_add);
-        editTextFreight=findViewById(R.id.freight);
-        editTextLorry=findViewById(R.id.lorry);
-        editTextDriver=findViewById(R.id.driver);
-        editTextOrigin=findViewById(R.id.origin);
-        editTextDestination=findViewById(R.id.destination);
-        editTextDistance=findViewById(R.id.distance);
-        editTextDate=findViewById(R.id.date);
-        editTextTime=findViewById(R.id.time);
-        textViewTitle=findViewById(R.id.schedule_title);
-        textViewSchedule=findViewById(R.id.schedule);
+
+        storeDriversInArrays();
+        driversCustomAdapter = new DriversCustomAdapter(DriversActivity.this, fullName, email, phone, additionalContactInfo, licenseNumber, licenseSeries, licenseCategory, salary, hireDate);
+        recyclerDriversView.setAdapter(driversCustomAdapter);
+        recyclerDriversView.setLayoutManager(new LinearLayoutManager(DriversActivity.this));
+    }
+
+    void storeDriversInArrays (){
+        Cursor cursor = myDB.readAllDrivers();
+        if (cursor.getCount() == 0){
+            Toast.makeText(this,"Дані про водіїв відсутні",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            while (cursor.moveToNext()){
+                fullName.add(cursor.getString(0));
+                email.add(cursor.getString(1));
+                phone.add(cursor.getString(2));
+                additionalContactInfo.add(cursor.getString(3));
+                licenseNumber.add(cursor.getString(4));
+                licenseSeries.add(cursor.getString(5));
+                licenseCategory.add(cursor.getString(6));
+                salary.add(cursor.getString(7));
+                hireDate.add(cursor.getString(8));
+            }
+        }
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){

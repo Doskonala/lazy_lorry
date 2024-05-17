@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddLorryActivity"
+    tools:context=".AddDriverActivity"
     android:padding="30sp">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -14,27 +14,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Додати вантажівку"
+            android:text="Додати водія"
             android:textSize="30sp"
             android:textStyle="bold"
             android:layout_marginTop="50dp"/>
         <EditText
-            android:id="@+id/number"
-            android:hint="Номер автомобіля"
+            android:id="@+id/driver_full_name"
+            android:hint="ПІБ"
             android:layout_marginTop="30dp"
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
-            android:id="@+id/load_capacity"
-            android:hint="Вантажність (т)"
+            android:id="@+id/driver_email"
+            android:hint="Електронна пошта"
             android:layout_marginTop="10dp"
-            android:inputType="numberDecimal"
+            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
-            android:id="@+id/manufacturer"
-            android:hint="Виробник"
+            android:id="@+id/driver_phone"
+            android:hint="Телефон"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/driver_additional_contact_info"
+            android:hint="Додаткова контактна інформація"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/driver_license_number"
+            android:hint="Номер посвідчення"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/driver_license_series"
+            android:hint="Серія посвідчення"
             android:layout_marginTop="10dp"
             android:inputType="text"
             android:layout_width="match_parent"
@@ -43,35 +64,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3.5dp"
-            android:hint="@string/select_type_of_freight"
+            android:hint="@string/select_category_for_driver"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
             <AutoCompleteTextView
-                android:id="@+id/auto_complete_txt_type_of_freight_for_lorry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3.5dp"
-            android:hint="@string/select_bodywork_for_lorry"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-            <AutoCompleteTextView
-                android:id="@+id/auto_complete_txt_bodywork_for_lorry"
+                android:id="@+id/auto_complete_txt_driver_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"/>
         </com.google.android.material.textfield.TextInputLayout>
         <EditText
-            android:id="@+id/production_year"
-            android:hint="Рік виробництва"
+            android:id="@+id/driver_salary"
+            android:hint="Зарплата (грн)"
             android:layout_marginTop="10dp"
-            android:inputType="number"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/driver_hire_date"
+            android:hint="Дата прийому на роботу"
+            android:layout_marginTop="10dp"
+            android:inputType="date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/btn_add_lorry"
+            android:id="@+id/btn_add_driver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

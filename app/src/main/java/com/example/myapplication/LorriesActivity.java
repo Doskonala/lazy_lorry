@@ -3,10 +3,12 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,14 +17,19 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 public class LorriesActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout timetable, messages, orders, lorries, drivers, clients, partners, company;
     LinearLayout logout;
-    RecyclerView recyclerView;
+    RecyclerView recyclerLorriesView;
     FloatingActionButton add_lorry_button;
+    MyDatabaseHelper myDB;
+    ArrayList<String> carNumber, loadCapacity, manufacturer, typeOfFreight, typeOfBodywork, yearOfProduction;
+    LorriesCustomAdapter lorriesCustomAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +45,7 @@ public class LorriesActivity extends AppCompatActivity {
         partners=findViewById(R.id.partners);
         company=findViewById(R.id.company);
         logout=findViewById(R.id.logout);
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerLorriesView = findViewById(R.id.recyclerLorriesView);
         add_lorry_button = findViewById(R.id.add_lorry_button);
         add_lorry_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +54,14 @@ public class LorriesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        myDB = new MyDatabaseHelper(LorriesActivity.this);
+        carNumber = new ArrayList<>();
+        loadCapacity = new ArrayList<>();
+        manufacturer = new ArrayList<>();
+        typeOfFreight = new ArrayList<>();
+        typeOfBodywork = new ArrayList<>();
+        yearOfProduction = new ArrayList<>();
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +121,26 @@ public class LorriesActivity extends AppCompatActivity {
             }
         });
 
+        storeLorriesInArrays();
+        lorriesCustomAdapter = new LorriesCustomAdapter(LorriesActivity.this, carNumber, loadCapacity, manufacturer, typeOfFreight, typeOfBodywork, yearOfProduction);
+        recyclerLorriesView.setAdapter(lorriesCustomAdapter);
+        recyclerLorriesView.setLayoutManager(new LinearLayoutManager(LorriesActivity.this));
+    }
+
+    void storeLorriesInArrays () {
+        Cursor cursor = myDB.readAllLorries();
+        if (cursor.getCount() == 0){
+            Toast.makeText(this,"Дані про вантажівки відсутні",Toast.LENGTH_SHORT).show();
+        } else{
+            while (cursor.moveToNext()){
+                carNumber.add(cursor.getString(0));
+                loadCapacity.add(cursor.getString(1));
+                manufacturer.add(cursor.getString(2));
+                typeOfFreight.add(cursor.getString(3));
+                typeOfBodywork.add(cursor.getString(4));
+                yearOfProduction.add(cursor.getString(5));
+            }
+        }
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){
